@@ -172,15 +172,64 @@ body {
 .home-subtitle {
     flex-grow: 1;
 }
-.home-search {
+.home-actions {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
+}
+.home-search {
+    margin-bottom: 1.5rem;
 }
 .home-search-input, .home-search-button {
     padding: 0.3rem 0.5rem !important;
 }
 .home-search-input {
     width: 20rem !important;
+}
+.home-playlist-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.home-playlist-actions button {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem;
+    background-color: #045edd;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+.home-playlist-actions button:hover {
+    background-color: #0347b8;
+}
+.home-features {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 3rem;
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.feature-card {
+    flex: 1;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.feature-card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+.feature-card p {
+    margin: 0;
+    color: #666;
+    line-height: 1.4;
 }
 
 .search {
@@ -224,6 +273,59 @@ body {
 .search-button {
     width: 100%;
     margin-top: 1rem;
+}
+
+.playlist-controls {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #e8f4fd;
+    border-radius: 0.3rem;
+    border: 1px solid #bee5eb;
+}
+
+.playlist-mode-info {
+    margin-bottom: 0.5rem;
+    color: #0c5460;
+    font-size: 0.9rem;
+}
+
+.playlist-selected-count {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.playlist-clear-selection, .playlist-back-to-playlist {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    margin-right: 0.5rem;
+}
+
+.playlist-clear-selection {
+    background-color: #dc3545;
+    color: white;
+}
+
+.playlist-clear-selection:hover {
+    background-color: #c82333;
+}
+
+.playlist-back-to-playlist {
+    background-color: #045edd;
+    color: white;
+}
+
+.playlist-back-to-playlist:hover {
+    background-color: #0347b8;
+}
+
+.playlist-checkbox {
+    margin-right: 0.5rem;
+    transform: scale(1.2);
 }
 
 .results {
@@ -445,6 +547,297 @@ body {
 .stats-platforms :is(td, th) {
     text-align: center;
     padding: 0.5rem 1rem;
+}
+
+/* Playlist Styles */
+.playlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.playlist-create-new {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem;
+    background-color: #045edd;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.playlist-create-new:hover {
+    background-color: #0347b8;
+}
+
+.playlist-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.playlist-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.playlist-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.playlist-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.playlist-card-name {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.playlist-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.playlist-card-actions button {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.playlist-edit-btn {
+    background-color: #045edd;
+    color: white;
+}
+
+.playlist-edit-btn:hover {
+    background-color: #0347b8;
+}
+
+.playlist-delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.playlist-delete-btn:hover {
+    background-color: #c82333;
+}
+
+.playlist-card-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.no-playlists, .no-games {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 2rem;
+    grid-column: 1 / -1;
+}
+
+/* Playlist Editor Styles */
+.playlist-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.playlist-name-input {
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    padding: 0.5rem 0;
+    background: transparent;
+    min-width: 200px;
+}
+
+.playlist-name-input:focus {
+    outline: none;
+    border-bottom-color: #045edd;
+}
+
+.playlist-editor-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.playlist-editor-actions button {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.playlist-add-games {
+    background-color: #28a745;
+    color: white;
+}
+
+.playlist-add-games:hover {
+    background-color: #218838;
+}
+
+.playlist-share {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.playlist-share:hover {
+    background-color: #138496;
+}
+
+.playlist-save {
+    background-color: #045edd;
+    color: white;
+}
+
+.playlist-save:hover {
+    background-color: #0347b8;
+}
+
+.playlist-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.playlist-delete:hover {
+    background-color: #c82333;
+}
+
+.playlist-back {
+    background-color: #6c757d;
+    color: white;
+}
+
+.playlist-back:hover {
+    background-color: #5a6268;
+}
+
+.playlist-games {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.playlist-game-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s;
+}
+
+.playlist-game-card:hover {
+    transform: translateY(-2px);
+}
+
+.playlist-game-logo {
+    width: 100%;
+    height: 120px;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.playlist-game-logo:hover {
+    opacity: 0.8;
+}
+
+.playlist-game-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.playlist-game-info {
+    flex-grow: 1;
+    margin-bottom: 1rem;
+}
+
+.playlist-game-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.2;
+}
+
+.playlist-game-developer {
+    margin: 0 0 0.3rem 0;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.playlist-game-tags {
+    margin: 0;
+    font-size: 0.7rem;
+    color: #888;
+    line-height: 1.3;
+}
+
+.playlist-game-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.playlist-game-actions button {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    flex: 1;
+}
+
+.playlist-game-play {
+    background-color: #28a745;
+    color: white;
+}
+
+.playlist-game-play:hover {
+    background-color: #218838;
+}
+
+.playlist-game-remove {
+    background-color: #dc3545;
+    color: white;
+}
+
+.playlist-game-remove:hover {
+    background-color: #c82333;
 }
 
 @keyframes spin {

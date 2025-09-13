@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Flashpoint Database</title>
+        <title>FlashShelf - Flash Game Playlist Maker</title>
         <link rel="icon" href="favicon.ico">
         <link rel="stylesheet" href="main.css">
-        <script defer src="home.js"></script>
+        <script defer src="playlist.js"></script>
     </head>
     <body>
         <div class="navbar">
             <a href="./" class="navbar-logo">
                 <img src="logo.svg" height="100%">
-                <span>Flashpoint Database</span>
+                <span>FlashShelf</span>
             </a>
-            <a href="search">Search</a>
+            <a href="search">Browse Games</a>
             <a href="statistics">Statistics</a>
             <a href="https://github.com/FlashpointProject/flashpoint-database" class="navbar-right">Source Code</a>
-            <a href="https://bluemaxima.org/flashpoint">Back to Home</a>
+            <a href="https://bluemaxima.org/flashpoint">Flashpoint</a>
         </div>
         <div class="content">
-            <div class="home-header">
-                <img src="logo.svg" height="100%" class="home-logo">
-                <div class="home-text">
-                    <div class="home-title">Flashpoint Database</div>
-                    <div class="home-subtitle">Search <b class="home-games"></b> games and <b class="home-animations"></b> animations</div>
-                </div>
+            <div class="playlist-header">
+                <div class="common-header">My Playlists</div>
+                <button id="playlistCreateNew" class="playlist-create-new">Create New Playlist</button>
             </div>
-            <div class="home-search">
-                <input class="home-search-input" placeholder="Enter search term..." autofocus>
-                <button class="home-search-button">Search</button>
+            
+            <div class="playlist-list" id="playlistList">
+                <!-- Playlists will be loaded here -->
+            </div>
+            
+            <div class="playlist-editor" id="playlistEditor" style="display: none;">
+                <div class="playlist-editor-header">
+                    <input type="text" id="playlistName" placeholder="Playlist Name" class="playlist-name-input">
+                    <div class="playlist-editor-actions">
+                        <button id="addGamesBtn" class="playlist-add-games">Add Games</button>
+                        <button id="sharePlaylistBtn" class="playlist-share">Share</button>
+                        <button id="savePlaylistBtn" class="playlist-save">Save</button>
+                        <button id="deletePlaylistBtn" class="playlist-delete">Delete</button>
+                        <button id="backToPlaylistsBtn" class="playlist-back">Back to Playlists</button>
+                    </div>
+                </div>
+                
+                <div class="playlist-games" id="playlistGames">
+                    <!-- Games in playlist will be displayed here -->
+                </div>
             </div>
         </div>
     </body>

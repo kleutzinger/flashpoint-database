@@ -3,6 +3,8 @@ let fpdb = {
     images: 'https://infinity.unstable.life/images',
     icons: 'https://flashpointproject.github.io/flashpoint-database-logos/',
     resultsPerPage: 100,
+    playlistMode: false,
+    selectedGames: new Set(),
     metaMap: {
         title:               "Title",
         alternateTitles:     "Alternate Titles",
@@ -44,6 +46,16 @@ let fpdb = {
 };
 
 fetch(fpdb.api + '/platforms').then(r => r.json()).then(json => { fpdb.platforms = json; });
+
+// Check if we're in playlist mode
+if (localStorage.getItem('currentPlaylistId')) {
+    fpdb.playlistMode = true;
+    fpdb.currentPlaylistId = localStorage.getItem('currentPlaylistId');
+    fpdb.currentPlaylist = JSON.parse(localStorage.getItem('flashShelfPlaylists') || '[]')
+        .find(p => p.id === fpdb.currentPlaylistId);
+    document.getElementById('playlistControls').style.display = 'block';
+    updateSelectedCount();
+}
 
 fetch('fields.json').then(r => r.json()).then(async json => {
     for (let field of json) {
@@ -229,6 +241,22 @@ function loadPage(page) {
         let entry = document.createElement('div');
         entry.className = 'entry';
         if (compact) entry.setAttribute('compact', 'true');
+        
+        // Add playlist selection checkbox if in playlist mode
+        if (fpdb.playlistMode) {
+            let checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'playlist-checkbox';
+            checkbox.setAttribute('data-game-id', fpdb.list[i].id);
+            
+            // Check if game is already in playlist
+            if (fpdb.currentPlaylist && fpdb.currentPlaylist.games.includes(fpdb.list[i].id)) {
+                checkbox.checked = true;
+            }
+            
+            checkbox.addEventListener('change', toggleGameSelection);
+            entry.appendChild(checkbox);
+        }
 
         let title = document.createElement('a');
         title.classList.add('entry-title', 'common-activate');
@@ -467,3 +495,84 @@ document.querySelectorAll('.results-go-to-page').forEach((elem, i) => elem.addEv
 document.querySelectorAll('.results-input-page').forEach(elem => elem.addEventListener('keyup', e => { if (e.key == 'Enter') loadPageFromInput(e.target); }));
 
 document.querySelector('.viewer-back').addEventListener('click', backToResults);
+
+// Playlist functionality
+function toggleGameSelection(event) {
+    const gameId = event.target.getAttribute('data-game-id');
+    const isChecked = event.target.checked;
+    
+    if (isChecked) {
+        // Add to playlist immediately
+        addGameToPlaylist(gameId);
+        fpdb.selectedGames.add(gameId);
+    } else {
+        // Remove from playlist immediately
+        removeGameFromPlaylist(gameId);
+        fpdb.selectedGames.delete(gameId);
+    }
+    updateSelectedCount();
+}
+
+function addGameToPlaylist(gameId) {
+    if (!fpdb.currentPlaylist) return;
+    
+    if (!fpdb.currentPlaylist.games.includes(gameId)) {
+        fpdb.currentPlaylist.games.push(gameId);
+        savePlaylist();
+    }
+}
+
+function removeGameFromPlaylist(gameId) {
+    if (!fpdb.currentPlaylist) return;
+    
+    const index = fpdb.currentPlaylist.games.indexOf(gameId);
+    if (index > -1) {
+        fpdb.currentPlaylist.games.splice(index, 1);
+        savePlaylist();
+    }
+}
+
+function savePlaylist() {
+    if (!fpdb.currentPlaylist) return;
+    
+    const playlists = JSON.parse(localStorage.getItem('flashShelfPlaylists') || '[]');
+    const playlistIndex = playlists.findIndex(p => p.id === fpdb.currentPlaylist.id);
+    
+    if (playlistIndex !== -1) {
+        playlists[playlistIndex] = fpdb.currentPlaylist;
+        localStorage.setItem('flashShelfPlaylists', JSON.stringify(playlists));
+    }
+}
+
+function updateSelectedCount() {
+    const count = fpdb.currentPlaylist ? fpdb.currentPlaylist.games.length : 0;
+    document.getElementById('selectedCount').textContent = count;
+}
+
+function clearSelection() {
+    // Remove all games from playlist
+    if (fpdb.currentPlaylist) {
+        fpdb.currentPlaylist.games = [];
+        savePlaylist();
+    }
+    
+    // Clear all checkboxes
+    document.querySelectorAll('.playlist-checkbox').forEach(cb => {
+        cb.checked = false;
+    });
+    
+    fpdb.selectedGames.clear();
+    updateSelectedCount();
+}
+
+function backToPlaylist() {
+    const playlistId = localStorage.getItem('currentPlaylistId');
+    if (playlistId) {
+        localStorage.removeItem('currentPlaylistId');
+        location.href = '../?id=' + playlistId;
+    }
+}
+
+// Add event listeners for playlist controls
+document.getElementById('clearSelectionBtn')?.addEventListener('click', clearSelection);
+document.getElementById('backToPlaylistBtn')?.addEventListener('click', backToPlaylist);

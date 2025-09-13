@@ -10,12 +10,13 @@
         <div class="navbar">
             <a href="../" class="navbar-logo">
                 <img src="../logo.svg" height="100%">
-                <span>Flashpoint Database</span>
+                <span>FlashShelf</span>
             </a>
-            <a href="../search">Search</a>
+            <a href="../search">Browse Games</a>
+            <a href="../">My Playlists</a>
             <a href="../statistics">Statistics</a>
             <a href="https://github.com/FlashpointProject/flashpoint-database" class="navbar-right">Source Code</a>
-            <a href="https://bluemaxima.org/flashpoint">Back to Home</a>
+            <a href="https://bluemaxima.org/flashpoint">Flashpoint</a>
         </div>
         <div class="content">
             <div class="search">
@@ -29,6 +30,15 @@
                 <input type="checkbox" id="any"> <label for="any">Match any</label>
                 <input type="checkbox" id="paginate" checked> <label for="paginate">Paginate</label>
                 <button class="search-button">Search</button>
+                
+                <div class="playlist-controls" id="playlistControls" style="display: none;">
+                    <div class="playlist-mode-info">
+                        <strong>Playlist Mode:</strong> Check games to add them to your playlist automatically
+                    </div>
+                    <div class="playlist-selected-count">In playlist: <span id="selectedCount">0</span> games</div>
+                    <button class="playlist-clear-selection" id="clearSelectionBtn">Clear All</button>
+                    <button class="playlist-back-to-playlist" id="backToPlaylistBtn">Back to Playlist</button>
+                </div>
             </div>
             <div class="results">
                 <div class="common-header">Results</div>
